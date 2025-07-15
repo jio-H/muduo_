@@ -20,7 +20,7 @@ pip install flashinfer -i https://flashinfer.ai/whl/cu121/torch2.4/
 
 方法2: whl文件安装
 
-- 网页访问：`https://flashinfer.ai/whl/cu121/torch2.4/flashinfer/`
+- 网页访问：[`https://flashinfer.ai/whl/cu121/torch2.4/flashinfer/`](https://flashinfer.ai/whl/cu121/torch2.4/flashinfer/)
 - 找到适合自己服务器的版本并且下载whl文件:例如`flashinfer-0.1.6+cu121torch2.4-cp310-cp310-linux_x86_64.whl`
 - 使用`pip install ***.whl`进行安装，比如:
   
