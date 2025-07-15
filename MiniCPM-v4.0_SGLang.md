@@ -30,10 +30,14 @@ pip install flashinfer -i https://flashinfer.ai/whl/cu121/torch2.4/
 如果在安装过程中遇到问题，请随时查阅[官方安装文档](https://docs.sglang.ai/start/install.html)
 
 ## 2. sglang发起推理服务
---model 后面可以改为本地的minicpm3地址
-如果出现out of memory，加上参数--disable-cuda-graph再试
+
+默认情况下，它将从 Hugging Face Hub 下载模型文件
 ```cpp
-CUDA_VISIBLE_DEVICES=1,2 python -m sglang.launch_server --model-path /cache/huwenhao/models/MiniCPM-V4 --port 30000 --device cuda --trust-remote-code
+python -m sglang.launch_server --model-path openbmb/MiniCPM-V-4.0 --port 30000
+```
+也可以在参数 --model-path后指定本地路径
+```cpp
+python -m sglang.launch_server --model-path your_model_path --port 30000 --trust-remote-code
 ```
 
 ## 3. 调用服务接口
@@ -42,7 +46,7 @@ CUDA_VISIBLE_DEVICES=1,2 python -m sglang.launch_server --model-path /cache/huwe
     curl -s http://localhost:30000/v1/chat/completions \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "MiniCPM-V_4.0",
+        "model": "MiniCPM-V-4.0",
         "messages": [
         {
             "role": "user",
@@ -54,7 +58,7 @@ CUDA_VISIBLE_DEVICES=1,2 python -m sglang.launch_server --model-path /cache/huwe
             {
                 "type": "image_url",
                 "image_url": {
-                "url": "https://github.com/sgl-project/sglang/blob/main/test/lang/example_image.png?raw=true"
+                "url": "https://github.com/tc-mb/MiniCPM-o-cookbook_private/blob/main/inference/assets/airplane.jpeg"
                 }
             }
             ]
@@ -83,7 +87,7 @@ CUDA_VISIBLE_DEVICES=1,2 python -m sglang.launch_server --model-path /cache/huwe
                     {
                         "type": "image_url",
                         "image_url": {
-                            "url": "/cache/huwenhao/example_images/example_image.png",
+                            "url": "https://github.com/tc-mb/MiniCPM-o-cookbook_private/blob/main/inference/assets/airplane.jpeg",
                         },
                     },
                 ],
@@ -94,3 +98,4 @@ CUDA_VISIBLE_DEVICES=1,2 python -m sglang.launch_server --model-path /cache/huwe
 
     print(response.choices[0].message.content)
     ```
+    **image_url如果不能访问，可以替换成本地图片**
